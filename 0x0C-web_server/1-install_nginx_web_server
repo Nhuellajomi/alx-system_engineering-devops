@@ -1,7 +1,15 @@
-#!/usr/bin/env bash
-# Installs nginx server
-apt-get update
-apt-get -y install nginx
-ufw allow 'Nginx HTTP'
-echo "Hello World!" > /var/www/html/index.html
-service nginx start
+sudo apt-get -y update
+sudo apt-get -y install nginx
+#
+# award the user ownership 
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www
+#
+# Configures Nginx to show 'hello world'
+echo "Hello World!" | sudo tee /var/www/html/index.html
+#
+# permit nginx to connect over a firewall
+sudo ufw allow 'Nginx HTTP'
+#
+# Restart nginx to apply changes
+sudo service nginx restart
